@@ -29,20 +29,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        
+        $request->user()->fill($request->validated());
+        
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
+        }
+        
         $image = $request->file('image');
         
         if ($image) {
             $image_path = time().$image->getClientOriginalName();
-            
+
             Storage::disk('users')->put($image_path, File::get($image));
-
             $request->user()->image = $image_path;
-        }
-
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
         }
 
         $request->user()->save();

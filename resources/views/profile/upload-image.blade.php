@@ -13,7 +13,7 @@
                         @csrf
 
                         <div class="form-group row align-items-center justify-content-center">
-                            <label for="image_path" class="col-md-3 col-form-label text-right">Imagen</label>
+                            <label for="image_path" class="col-md-3 col-form-label text-right">Image</label>
                             <div class="col-md-7">
                                 <input type="file" name="image_path" id="image_path" class="rounded border border-1 border-light form-control p-4 text-light" required>
 
