@@ -60,7 +60,7 @@
         </div>
 
         @if(Auth::user())
-            <img src="{{url('/profile/avatar', ['filename' => Auth::user()->image])}}" alt="">
+            @include('components.user-avatar', ['data' => Auth::user()->image])
         @endif
 
         <div>

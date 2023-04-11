@@ -22,7 +22,7 @@
                 <div class="hidden sm:flex sm:items-center sm:ml-6" style="color: white; gap: 1.5rem;">
                     <ul>
                         <li>
-                            <a href="{{route('image.create')}}">Subir imagen</a>
+                            <a href="{{route('image.create')}}">Upload image</a>
                         </li>
                     </ul>
                     <x-dropdown align="right" width="48">
@@ -30,7 +30,7 @@
                             <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style=" gap: 1rem;">
     
                                 @if(Auth::user())
-                                    <x-user-avatar></x-user-avatar>
+                                    @include('components.user-avatar', ['data' => Auth::user()->image])
                                 @endif
     
                                 <div class="inline-flex items-center">

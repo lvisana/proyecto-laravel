@@ -13,13 +13,13 @@ class ImageController extends Controller
 {
     public function create()
     {
-        return view('profile.upload-image');
+        return view('post.upload-image');
     }
 
     public function save(Request $request)
     {
         $request->validate([
-            'description' => ['string', 'max:1024', 'required'],
+            'description' => ['string', 'required'],
             'image_path' => ['image', 'required'],
         ]);
 
@@ -45,9 +45,11 @@ class ImageController extends Controller
     public function detail($id)
     {
         $image = Image::where('id', $id)->get();
+        $comments = $image[0]->comments()->paginate(5);
         
         return view('detail', [
-            'image' => $image
+            'image' => $image,
+            'comments' => $comments
         ]);
     }
 

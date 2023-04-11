@@ -1,12 +1,12 @@
 <x-app-layout>
 
         <x-slot name="header">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h1 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Upload image') }}
-            </h2>
+            </h1>
         </x-slot>
 
-        <div class="py-12 container text-light">
+        <section class="py-12 container text-light">
             <div class="row max-w-7xl justify-content-center p-4 sm:p-8 dark:bg-gray-800 shadow sm:rounded-lg mx-auto sm:px-6 lg:px-8 space-y-6">
                 <div class="card-body">
                     <form method="POST" action=" {{route('image.save')}} " class="d-flex flex-column gap-3" enctype="multipart/form-data">
@@ -45,6 +45,6 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </section>
 
 </x-app-layout>
