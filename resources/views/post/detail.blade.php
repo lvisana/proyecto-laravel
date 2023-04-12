@@ -6,11 +6,41 @@
     </x-slot>
 
     <section class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 card text-bg-dark mb-5" style="margin-bottom: 0 !important;">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 card dark:bg-gray-800 text-light mb-5" style="margin-bottom: 0 !important;">
 
-            <div class="card-header px-5 py-3 d-flex align-items-center gap-3">
-                    @include('components.user-avatar', ['data' => $image[0]->user->image])
-                <p>{{$image[0]->user->name}} {{$image[0]->user->surname}}<span class="text-secondary"> | &#64;{{$image[0]->user->nick}}</span></p>
+            <div class="card-header px-5 py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-3">
+                        @include('components.user-avatar', ['data' => $image[0]->user->image, 'size' => 'width: 50px; height: 50px; border-radius: 100%;'])
+                        <p>{{$image[0]->user->name}} {{$image[0]->user->surname}}<span class="text-secondary"> | &#64;{{$image[0]->user->nick}}</span></p>
+                    </div>
+                    @if (\Auth::user())
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style=" gap: 1rem;">
+                                    <img src="{{asset('img/light-ellipsis.png')}}" style="width: 35px; height: 35px;" alt="">
+                                </button>
+                            </x-slot>
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('settings.edit')">
+                                    {{ __('Delete') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('profile')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+                                <!-- Authentication -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                </div>
+                @endif
             </div>
 
             <div class="card-body p-0">
@@ -25,7 +55,7 @@
                             <div class="d-flex align-items-center gap-2">
                                 @php  $is_like = false; @endphp
 
-                                    @foreach ($image[0]->likes as $like) 
+                                    @foreach ($image[0]->likes as $like)
                                         @if ($like->user_id === Auth::user()->id)
                                             @php  $is_like = true; @endphp
                                         @endif
@@ -37,7 +67,7 @@
                                         <img class="like-btn" id="{{$image[0]->id}}" style="width=25px; height: 25px;" src="{{asset('img/light-heart.png')}}" alt="">
                                     @endif
 
-                                    <span class="text-secondary">{{count($image[0]->likes)}}</span>
+                                    <span class="text-secondary" data-id="likeCount">{{count($image[0]->likes)}}</span>
                                 </div>
                         </div>
                     </div>

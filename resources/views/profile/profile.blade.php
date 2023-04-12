@@ -1,22 +1,31 @@
 <x-app-layout>
     <x-slot name="header">
         <h1 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Profile') }}
         </h1>
     </x-slot>
 
     <section class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @if (session('status') === 'image-uploaded')
-                <x-success>{{ __('Image uploaded succesfully') }}</x-success>
-            @endif
-
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    @foreach ($images as $key => $image)
+                    <section class="w-75" id="user" style="margin: 0 auto;">
+                        <div class="d-flex align-items-center gap-3">
+                            @include('components.user-avatar', ['data' => Auth::user()->image, 'size' => "width: 200px; height: 200px; border-radius: 100%;"])
+                            <div>
+                                <span class="fs-5 fw-bold">&#64;{{$user[0]->nick}}</span>
+                                <h2 class="fs-3 fw-bold mt-2 mb-1">{{$user[0]->name}} {{$user[0]->surname}}</h2>
+                                <p>Joined {{$user[0]->created_at->diffForHumans(null, false, false, 1)}}</p>
+                            </div>
+                        </div>
+                    </section>
+
+                        <hr class="w-75 my-4" style="margin: 0 auto;">
+
+                        @foreach ($images as $key => $image)
                         <div class="card w-75 dark:bg-gray-800 text-light mb-5" style="margin: 0 auto;">
                             <div class="card-header px-5 py-3 d-flex align-items-center gap-3">
                                 @include('components.user-avatar', ['data' => $image->user->image, 'size' => 'width: 50px; height: 50px; border-radius: 100%;'])
@@ -61,7 +70,6 @@
 
                     <div class="clearfix"></div>
                     {{$images->links()}}
-                </div>
 
             </div>
         </div>

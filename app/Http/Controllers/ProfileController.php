@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
@@ -47,7 +48,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('settings.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -75,5 +76,18 @@ class ProfileController extends Controller
     {
         $image = Storage::disk('users')->get($filename);
         return new Response($image, 200);
+    }
+
+    public function profile()
+    {
+        $currUser = \Auth::user();
+
+        $user = User::where('id', $currUser->id)->get();
+        $images = $user[0]->images()->orderByDesc('created_at')->paginate(3);
+
+        return view('profile.profile', [
+            'user' => $user,
+            'images' => $images
+        ]);
     }
 }

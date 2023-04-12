@@ -2,7 +2,6 @@
         <!-- Primary Navigation Menu -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center" style="color: white;">
                         <a href="{{ route('dashboard') }}">
@@ -10,27 +9,31 @@
                         </a>
                     </div>
     
-                    <!-- Navigation Links -->
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    </div>
-                </div>
-    
                 <!-- Settings Dropdown -->
                 <div class="hidden sm:flex sm:items-center sm:ml-6" style="color: white; gap: 1.5rem;">
-                    <ul>
-                        <li>
-                            <a href="{{route('image.create')}}">Upload image</a>
+                    <ul class="navbar align-items-center">
+                        <li class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('like.favorite')" :active="request()->routeIs('like.favorite')">
+                                {{ __('Favorite') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('image.create')" :active="request()->routeIs('image.create')">
+                                {{ __('Upload image') }}
+                            </x-nav-link>
                         </li>
                     </ul>
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style=" gap: 1rem;">
+                            <button class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150" style=" gap: 1rem;">
     
                                 @if(Auth::user())
-                                    @include('components.user-avatar', ['data' => Auth::user()->image])
+                                    @include('components.user-avatar', ['data' => Auth::user()->image, 'size' => "width: 50px; height: 50px; border-radius: 100%;"])
                                 @endif
     
                                 <div class="inline-flex items-center">
@@ -46,12 +49,12 @@
                         </x-slot>
     
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Configuración') }}
+                            <x-dropdown-link :href="route('profile')">
+                                {{ __('Profile') }}
                             </x-dropdown-link>
-    
-                            <x-dropdown-link :href="route('dashboard')">
-                                {{ __('Mi perfil') }}
+
+                            <x-dropdown-link :href="route('settings.edit')">
+                                {{ __('Settings') }}
                             </x-dropdown-link>
     
                             <!-- Authentication -->
@@ -86,6 +89,12 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('like.favorite')" :active="request()->routeIs('like.favorite')">
+                    {{ __('Favorite') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('image.create')" :active="request()->routeIs('image.create')">
+                    {{ __('Upload image') }}
+                </x-responsive-nav-link>
             </div>
     
             <!-- Responsive Settings Options -->
@@ -96,8 +105,12 @@
                 </div>
     
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')">
+                    <x-responsive-nav-link :href="route('profile')">
                         {{ __('Profile') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('settings.edit')">
+                        {{ __('Settings') }}
                     </x-responsive-nav-link>
     
                     <!-- Authentication -->

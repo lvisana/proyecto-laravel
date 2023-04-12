@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" enctype="multipart/form-data" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" enctype="multipart/form-data" action="{{ route('settings.update') }}" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -25,7 +25,7 @@
 
         <div>
             <x-input-label for="surname" :value="__('Surname')" />
-            <x-text-input id="surname" name="surname" type="text" class="mt-1 block w-full" :value="old('surname', $user->surname)" required autofocus autocomplete="surname" />
+            <x-text-input id="surname" name="surname" type="text" class="mt-1 block w-full" :value="old('surname', $user->surname)" autofocus autocomplete="surname" />
             <x-input-error class="mt-2" :messages="$errors->get('surname')" />
         </div>
 
@@ -59,9 +59,7 @@
             @endif
         </div>
 
-        @if(Auth::user())
-            @include('components.user-avatar', ['data' => Auth::user()->image])
-        @endif
+            @include('components.user-avatar', ['data' => Auth::user()->image, 'size' => "width: 100%; height: 500px;"])
 
         <div>
             <x-input-label for="image" :value="__('Profile picture')" />

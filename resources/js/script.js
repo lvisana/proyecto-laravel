@@ -1,30 +1,45 @@
-let url = 'http://proyecto-laravel.test/'
+let home = 'http://proyecto-laravel.test/'
 
 window.addEventListener('DOMContentLoaded', function() {
     if (document.querySelectorAll('.like-btn')) {
 
-        const saveLike = (id) =>{
-            let xhttp = new XMLHttpRequest;
-            let url = url+'/like/'+id
+        let btn = document.querySelectorAll('.like-btn');
 
-            xhttp.open('GET', url, true);
+        const saveLike = (id, count) =>{
+
+            fetch(home+'like/save/'+id)
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function() {
+                    fetch(home+'image/likecount/'+id)
+                        .then(function(response) {
+                            return response.json();
+                        }).then(function(json) {
+                            if (Number(json.count) >= 0 && document.querySelector(`[data-id="${count}"]`)) {
+                                document.querySelector(`[data-id="${count}"]`).textContent = json.count
+                            }
+                        })
+                });
         }
 
-        let id
 
-        document.querySelectorAll('.like-btn').forEach(el => {
-            id = el.id
-            el.addEventListener('click', function() {
-                if (el.classList.contains('btn-liked')) {
-                    el.setAttribute('src', url+'img/light-heart.png')
-                    el.classList.remove('btn-liked')
-                    saveLike(id)
-                } else {
-                    el.setAttribute('src', url+'img/red-heart.png')
-                    el.classList.add('btn-liked')
-                    saveLike(id)
-                }
-            })
+        btn.forEach(el => {
+            el.addEventListener('click', function(e) {
+
+                let id = e.target.id
+                let likeCount = e.target.nextElementSibling.dataset.id
+
+                    if (el.classList.contains('btn-liked')) {
+                        el.setAttribute('src', home+'img/light-heart.png');
+                        el.classList.remove('btn-liked');
+                        saveLike(id, likeCount);
+                    } else {
+                        el.setAttribute('src', home+'img/red-heart.png');
+                        el.classList.add('btn-liked');
+                        saveLike(id, likeCount);
+                    }
+                })
         })
 
     }

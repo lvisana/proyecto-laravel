@@ -47,7 +47,7 @@ class ImageController extends Controller
         $image = Image::where('id', $id)->get();
         $comments = $image[0]->comments()->paginate(5);
         
-        return view('detail', [
+        return view('post.detail', [
             'image' => $image,
             'comments' => $comments
         ]);
@@ -57,5 +57,15 @@ class ImageController extends Controller
     {
         $image = Storage::disk('images')->get($filename);
         return new Response($image, 200);
+    }
+
+    public function likeCount($id)
+    {
+        $image = Image::where('id', $id)->get();
+        $count = $image[0]->likes()->count();
+
+        return response()->json([
+            'count' => (int)$count
+        ]);
     }
 }

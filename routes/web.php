@@ -3,6 +3,7 @@
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,14 +17,16 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [DashboardController::class, 'dashboard'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/settings', [ProfileController::class, 'edit'])->name('settings.edit');
+    Route::patch('/profile/settings', [ProfileController::class, 'update'])->name('settings.update');
+    Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
+    Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
     Route::get('/profile/avatar/{filename}', [ProfileController::class, 'avatar'])->name('profile.avatar');
 
 
@@ -32,13 +35,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/image/upload', [ImageController::class, 'create'])->name('image.create');
     Route::post('/image/save', [ImageController::class, 'save'])->name('image.save');
+    Route::get('/image/likecount/{id}', [ImageController::class, 'likeCount'])->name('image.likeCount');
 
 
     Route::get('/comment/delete/{id}', [CommentController::class, 'delete'])->name('comment.delete');
     Route::post('/comment/save', [CommentController::class, 'save'])->name('comment.save');
 
 
-    Route::get('/like/{id}', [LikeController::class, 'like'])->name('like');
+    Route::get('/like/save/{id}', [LikeController::class, 'like'])->name('like');
+    Route::get('/like/favorite', [LikeController::class, 'favorite'])->name('like.favorite');
+
 });
 
 require __DIR__.'/auth.php';

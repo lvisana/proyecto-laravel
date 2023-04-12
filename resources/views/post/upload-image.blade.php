@@ -28,7 +28,7 @@
                         <div class="form-group row align-items-center justify-content-center">
                             <label for="description" class="col-md-3 col-form-label text-right">Description</label>
                             <div class="col-md-7">
-                                <textarea type="file" name="description" id="description" class="rounded border border-1 border-light form-control p-4 text-light" required></textarea>
+                                <textarea type="file" name="description" id="description" class="rounded border border-1 border-light w-100 p-4 text-light" required></textarea>
 
                                 @if($errors->has('description'))
                                     <span class="invalid-feedback" role="alert">

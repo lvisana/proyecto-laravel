@@ -47,8 +47,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function image()
+    public function images()
     {
-        return $this->hasMany('App\Models\Image'. 'image_id');
+        return $this->hasMany('App\Models\Image');
     }
 }
