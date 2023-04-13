@@ -23,6 +23,11 @@
                             </x-nav-link>
                         </li>
                         <li class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <x-nav-link :href="route('profile.members')" :active="request()->routeIs('profile.member')">
+                                {{ __('Members') }}
+                            </x-nav-link>
+                        </li>
+                        <li class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <x-nav-link :href="route('image.create')" :active="request()->routeIs('image.create')">
                                 {{ __('Upload image') }}
                             </x-nav-link>
@@ -49,7 +54,7 @@
                         </x-slot>
     
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile')">
+                            <x-dropdown-link :href="route('profile', ['id' => Auth::user()->id])">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
@@ -105,7 +110,7 @@
                 </div>
     
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile')">
+                    <x-responsive-nav-link :href="route('profile', ['id' => Auth::user()->id])">
                         {{ __('Profile') }}
                     </x-responsive-nav-link>
 

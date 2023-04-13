@@ -30,7 +30,7 @@ class CommentController extends Controller
         $comment = Comment::find($id);
     
         if ($comment && $comment->user_id == \Auth::user()->id) {
-            Comment::where('id', $comment->id)->delete();
+            $comment->delete();
             return Redirect::to(route('image.detail', ['id' => $comment->image->id]).'#comments')->with('status', 'comment-deleted');
         } else {
             return Redirect::to(route('image.detail', ['id' => $comment->image->id]).'#comments');

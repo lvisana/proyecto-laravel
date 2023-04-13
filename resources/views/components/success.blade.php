@@ -1,1 +1,1 @@
-<div class="alert alert-success" role="alert">{{ $slot }}</div>
+<div class="alert alert-success container-md" role="alert">{{ $slot }}</div>

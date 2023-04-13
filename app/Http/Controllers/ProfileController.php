@@ -40,6 +40,8 @@ class ProfileController extends Controller
         $image = $request->file('image');
         
         if ($image) {
+            Storage::disk('users')->delete(User::find(\Auth::user()->id)->image);
+
             $image_path = time().$image->getClientOriginalName();
 
             Storage::disk('users')->put($image_path, File::get($image));
@@ -78,16 +80,23 @@ class ProfileController extends Controller
         return new Response($image, 200);
     }
 
-    public function profile()
+    public function profile($id)
     {
-        $currUser = \Auth::user();
-
-        $user = User::where('id', $currUser->id)->get();
+        $user = User::where('id', $id)->get();
         $images = $user[0]->images()->orderByDesc('created_at')->paginate(3);
 
         return view('profile.profile', [
             'user' => $user,
             'images' => $images
+        ]);
+    }
+
+    public function users()
+    {
+        $users = User::orderByDesc('created_at')->paginate(8);
+
+        return view('users', [
+            'users' => $users
         ]);
     }
 }

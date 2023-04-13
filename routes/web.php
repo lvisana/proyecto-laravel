@@ -22,20 +22,23 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/profile/user/{id}', [ProfileController::class, 'profile'])->name('profile');
     Route::get('/profile/settings', [ProfileController::class, 'edit'])->name('settings.edit');
     Route::patch('/profile/settings', [ProfileController::class, 'update'])->name('settings.update');
     Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
     Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
     Route::get('/profile/avatar/{filename}', [ProfileController::class, 'avatar'])->name('profile.avatar');
+    Route::get('/members', [ProfileController::class, 'users'])->name('profile.members');
 
 
     Route::get('/image/file/{filename}', [ImageController::class, 'file'])->name('image.file');
     Route::get('/image/post/{id}', [ImageController::class, 'detail'])->name('image.detail');
 
-    Route::get('/image/upload', [ImageController::class, 'create'])->name('image.create');
+    Route::get('/image/upload/{edit?}', [ImageController::class, 'create'])->name('image.create');
     Route::post('/image/save', [ImageController::class, 'save'])->name('image.save');
     Route::get('/image/likecount/{id}', [ImageController::class, 'likeCount'])->name('image.likeCount');
+    Route::get('/image/delete/{id}', [ImageController::class, 'delete'])->name('image.delete');
+    Route::post('/image/update/{id}', [ImageController::class, 'update'])->name('image.update');
 
 
     Route::get('/comment/delete/{id}', [CommentController::class, 'delete'])->name('comment.delete');
