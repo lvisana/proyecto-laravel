@@ -37,7 +37,9 @@
                                             <p>{{$image->user->name}} {{$image->user->surname}}<span class="text-secondary"> | &#64;{{$image->user->nick}}</span></p>
                                         </div>
     
+
                                         @if ($image->user_id == \Auth::user()->id)
+
                                             <x-dropdown align="right" width="48">
     
                                                 <x-slot name="trigger">
@@ -66,7 +68,7 @@
                                     <div class="px-5 py-4 d-flex justify-content-between align-items-center">
     
                                         <div class="card-text mb-0" style="width: 65%;">
-                                            <span class="text-secondary">&#64;{{$image->user->nick}} | {{$image->created_at->diffForHumans(null, false, false, 1) }} </span>
+                                            <span class="text-secondary">&#64;{{$image->user->nick}} | @if($image->created_at >= $image->updated_at) {{$image->created_at->diffForHumans(null, false, false, 1)}} @else {{$image->updated_at->diffForHumans(null, false, false, 1)}} @endif </span>
                                             <p class="mb-0">{{$image->description}}</p>
                                         </div>
     
@@ -118,7 +120,10 @@
                         @else
                             <div class="text-center">
                                 <h2 class="mb-4 fs-5">No uploaded images yet</h2>
-                                <a class="btn btn-success" style="margin: 0 auto;" href="{{route('image.create')}}">Upload image</a>
+                                
+                                @if ($id == \Auth::user()->id)
+                                    <a class="btn btn-success" style="margin: 0 auto;" href="{{route('image.create')}}">Upload image</a>
+                                @endif
                             </div>
                         @endif
 

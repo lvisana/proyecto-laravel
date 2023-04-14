@@ -74,10 +74,9 @@ class ImageController extends Controller
         $image = Image::where('id', $id)->get();
         $likes = $image[0]->likes();
 
-        $usersLikes = $likes->orderByDesc('created_at')->get();
         $users = [];
 
-        foreach($usersLikes as $like) {
+        foreach($likes->get() as $like) {
             array_push($users, array(
                 'name' => $like->user->name,
                 'surname' => $like->user->surname,

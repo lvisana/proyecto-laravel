@@ -19,6 +19,6 @@ class Like extends Model
 
     public function image()
     {
-        return $this->belongsTo('App\Models\Image', 'image_id');
+        return $this->belongsTo('App\Models\Image', 'image_id')->orderByDesc('created_at');
     }
 }

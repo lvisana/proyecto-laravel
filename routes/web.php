@@ -28,12 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
     Route::delete('/profile/settings', [ProfileController::class, 'destroy'])->name('settings.destroy');
     Route::get('/profile/avatar/{filename}', [ProfileController::class, 'avatar'])->name('profile.avatar');
-    Route::get('/members', [ProfileController::class, 'users'])->name('profile.members');
+    Route::get('profile/members/{search?}', [ProfileController::class, 'members'])->name('profile.members');
 
 
     Route::get('/image/file/{filename}', [ImageController::class, 'file'])->name('image.file');
     Route::get('/image/post/{id}', [ImageController::class, 'detail'])->name('image.detail');
-
     Route::get('/image/upload/{edit?}', [ImageController::class, 'create'])->name('image.create');
     Route::post('/image/save', [ImageController::class, 'save'])->name('image.save');
     Route::get('/image/likecount/{id}', [ImageController::class, 'likeCount'])->name('image.likeCount');

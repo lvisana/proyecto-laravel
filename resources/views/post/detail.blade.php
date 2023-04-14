@@ -50,7 +50,7 @@
                 <div class="p-5">
                     <div class="mb-5 d-flex justify-content-between align-items-center">
                         <div class="card-text mb-0">
-                            <span class="text-secondary">&#64;{{$image[0]->user->nick}} | {{$image[0]->created_at->diffForHumans(null, false, false, 1) }}</span>
+                            <span class="text-secondary">&#64;{{$image[0]->user->nick}} | @if($image[0]->created_at >= $image[0]->updated_at) {{$image[0]->created_at->diffForHumans(null, false, false, 1)}} @else {{$image[0]->updated_at->diffForHumans(null, false, false, 1)}} @endif</span>
                             <p class="mb-0">{{$image[0]->description}}</p>
                         </div>
                         <div class="card-link d-flex gap-4">

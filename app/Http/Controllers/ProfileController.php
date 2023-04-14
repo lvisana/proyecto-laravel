@@ -87,15 +87,23 @@ class ProfileController extends Controller
 
         return view('profile.profile', [
             'user' => $user,
-            'images' => $images
+            'images' => $images,
+            'id' => $id,
         ]);
     }
 
-    public function users()
+    public function members($search = null)
     {
-        $users = User::orderByDesc('created_at')->paginate(8);
+        if ($search) {
+            $users = User::where('name', 'LIKE', '%'.$search.'%')
+                        ->orWhere('surname', 'LIKE', '%'.$search.'%')
+                        ->orWhere('nick', 'LIKE', '%'.$search.'%')
+                        ->paginate(8);
+        } else {
+            $users = User::orderByDesc('created_at')->paginate(8);
+        }
 
-        return view('users', [
+        return view('members', [
             'users' => $users
         ]);
     }

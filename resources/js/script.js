@@ -1,6 +1,17 @@
 let home = 'http://proyecto-laravel.test/'
 
 window.addEventListener('DOMContentLoaded', function() {
+    
+    if (document.querySelector('[name="search"]') && document.getElementById('search')) {
+        document.getElementById('search').addEventListener('submit', function(e) {
+            e.preventDefault()
+            let value = document.querySelector('[name="search"]').value
+            // console.log(value)
+            window.location.href = home+'profile/members/'+value
+        })
+
+    }
+
     if (document.querySelectorAll('.like-btn')) {
 
         let btn = document.querySelectorAll('.like-btn');

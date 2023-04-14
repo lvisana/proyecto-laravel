@@ -60,7 +60,7 @@
                                     <div class="px-5 py-4 d-flex justify-content-between align-items-center">
 
                                         <div class="card-text mb-0" style="width: 65%;">
-                                            <span class="text-secondary">&#64;{{$image->user->nick}} | {{$image->created_at->diffForHumans(null, false, false, 1) }} </span>
+                                            <span class="text-secondary">&#64;{{$image->user->nick}} | @if($image->created_at >= $image->updated_at) {{$image->created_at->diffForHumans(null, false, false, 1)}} @else {{$image->updated_at->diffForHumans(null, false, false, 1)}} @endif </span>
                                             <p class="mb-0">{{$image->description}}</p>
                                         </div>
 

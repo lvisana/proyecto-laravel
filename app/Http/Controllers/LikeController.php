@@ -34,15 +34,10 @@ class LikeController extends Controller
     public function favorite()
     {
         $user = \Auth::user();
-        $favorite = Like::where('user_id', $user->id)->orderByDesc('created_at');
+        $favorite = Like::where('user_id', $user->id)->orderByDesc('created_at')->paginate(3);
 
-        if ($favorite->count() >= 1) {
-            return view('post.favorite', [
-                'favorite' => $favorite->paginate(3)
-            ]);
-        } else {
-            return view('post.favorite');
-        }
-
+        return view('post.favorite', [
+            'favorite' => $favorite
+        ]);
     }
 }
